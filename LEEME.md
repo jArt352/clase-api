@@ -1,18 +1,23 @@
-# Clase: tu API del concurso de disfraces
+# Clase: construye tu API con tu IA
 
-Servidor en Node + Express, hecho paso a paso. Cada carpeta es una versión completa que se puede ejecutar.
+Un servidor en Node + Express que los alumnos construyen **dirigiendo a una IA con prompts**, sin necesidad de programar. Cada carpeta es una versión que se puede ejecutar.
 
-| Carpeta | Qué agrega | Tema |
+| Carpeta | Qué contiene | Tema |
 |---|---|---|
-| `paso1-leer` | Servidor y ruta `GET /api/participantes` | API |
+| `paso0-inicio` | **Punto de partida**: servidor casi vacío | |
+| `paso1-leer` | Ruta `GET /api/participantes` | API |
 | `paso2-registrar` | `POST` y números de respuesta (201, 400, 404) | API |
-| `paso3-seguridad` | Validación, `helmet`, `cors`, límite de peticiones, `.env` y token | Seguridad |
+| `paso3-seguridad` | Validación, `helmet`, `cors`, límite de peticiones | Seguridad |
 | `paso4-base-de-datos` | Datos reales en Supabase | API + datos |
 | `paso5-archivos` | Subida de foto con revisión | Archivos |
 | `paso6-final` | Votos, ranking y listo para Vercel | Todo junto |
 
-- **Alumnos:** lean `GUIA-ALUMNO.md`.
-- **Profesor:** lee `GUION-PROFESOR.md`.
+Los alumnos empiezan en `paso0-inicio`. Las demás carpetas son **la solución de cada paso**: si algo falla, copian el `server.js` del paso y siguen.
+
+## Documentos
+
+- **Alumnos:** [GUIA-ALUMNO.md](GUIA-ALUMNO.md) y [PROMPTS.md](PROMPTS.md) (los prompts listos para copiar).
+- **Profesor:** [GUION-PROFESOR.md](GUION-PROFESOR.md) (guion minuto a minuto de 3 h 40 min).
 
 ## Probar en tu computadora
 

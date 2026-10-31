@@ -1,161 +1,71 @@
-# Guía del alumno: tu API del concurso de disfraces
+# Guía del alumno: construye tu API con tu IA
 
-Hoy construyes **tu propio servidor** (una API), lo proteges, le agregas fotos y lo publicas en internet.
-Todos hacemos los mismos pasos, al mismo tiempo.
+**No necesitas saber programar.** Hoy tú diriges y tu IA escribe el código. Todos hacemos los mismos pasos, al mismo tiempo, y terminamos con una aplicación publicada en internet.
 
-## Las 3 ideas de hoy
+## Lo que vamos a lograr
 
-| Tema | Es como... | Qué haces |
+| Tema | Es como... | Lo que lograrás |
 |---|---|---|
-| **API** | Un mesero: lleva tu pedido a la cocina y te trae la respuesta | Programas las rutas de tu servidor |
-| **Seguridad** | Un portero: revisa quién entra y qué trae | Validas, limitas y proteges con claves |
-| **Archivos** | Un paquete por correo: se revisa antes de guardarlo | Subes la foto del disfraz |
+| **API** | Un mesero que lleva tu pedido a la cocina | Tu página pide y guarda disfraces |
+| **Seguridad** | Un portero que revisa a quien entra | Tu servidor se defiende de datos malos y abusos |
+| **Archivos** | Un paquete por correo que se revisa antes de guardar | Subes la foto de tu disfraz |
 
 ## Lo que necesitas (todo gratis)
 
-- Node.js 20 o más (`node -v` en la terminal)
-- VS Code y la extensión **Thunder Client**
-- Una cuenta de **GitHub**
-- Una cuenta de **Vercel** (se crea con "Continue with GitHub")
+- Una IA: ChatGPT, Claude, Gemini, Copilot o la de tu editor
+- **VS Code**, **Node.js 20+** (`node -v`) y la extensión **Thunder Client**
+- Una cuenta de **GitHub** y una de **Vercel** (se crea con "Continue with GitHub")
 - Las claves de la base de datos: te las da el profesor
 
-## Cómo trabajamos
+## Cómo trabajamos: 3 movimientos
 
-1. Abre la carpeta `paso1-leer` en VS Code.
-2. Instala y arranca:
+1. **Pegas el prompt** del paso en tu IA.
+2. **Copias el `server.js`** que te devuelve y lo pegas en tu archivo. Guardas.
+3. **Pruebas.** Comparas con lo que dice "Debes ver".
+
+Todos los prompts están en **[PROMPTS.md](PROMPTS.md)**. Solo copias y pegas.
+
+> Si algo falla, usa el **prompt de rescate**. Si falla dos veces, **copia el `server.js` de la carpeta del paso** y sigue con el grupo. Nadie se queda atrás.
+
+## Antes de empezar
 
 ```bash
+cd paso0-inicio
 npm install
 npm run dev
 ```
 
-3. Abre http://localhost:3000. Verás la página del concurso.
-4. En cada paso, escribes lo que indica el profesor en `server.js`. Los bloques nuevos están marcados con `// PASO N`.
-5. **Si te pierdes**, copia el `server.js` de la carpeta del paso siguiente y sigue con el grupo. Nadie se queda atrás.
+Abre http://localhost:3000. Verás la página, pero le faltan rutas. Las vamos a crear con la IA.
 
-> Cada vez que cambies `server.js`, el servidor se reinicia solo (`npm run dev`).
+## Los 6 pasos
 
----
+| Paso | Le pides a la IA... | Debes ver |
+|---|---|---|
+| **1** | Una ruta para **ver** los participantes | Las 3 tarjetas de ejemplo |
+| **2** | Una ruta para **registrar** uno nuevo | Tu tarjeta aparece al enviarla |
+| **3** | Que **proteja** el servidor (el portero) | Errores claros y el aviso "Vas muy rápido" |
+| **4** | Que **guarde en una base de datos real** | Tu disfraz sigue ahí al reiniciar |
+| **5** | Que acepte **fotos** con revisión | Tu selfie en la tarjeta; un PDF se rechaza |
+| **6** | Que cuente **votos** (uno por persona) | Votas una vez; el segundo intento se rechaza |
 
-## Paso 1: tu primera ruta (GET)
+## Palabras que vas a escuchar
 
-**Idea:** `GET` es "ver el menú". Cuando alguien pide `/api/participantes`, el servidor responde la lista.
-
-```js
-app.get("/api/participantes", (req, res) => {
-  res.json(participantes);
-});
-```
-
-**Pruébalo:** abre http://localhost:3000/api/participantes. Debes ver 3 participantes en JSON.
-Luego abre http://localhost:3000: la página muestra las tarjetas.
-
-## Paso 2: registrar participantes (POST)
-
-**Idea:** `POST` es "hacer un pedido nuevo". El servidor responde con un número que dice cómo salió:
-
-| Número | Significa |
+| Palabra | Significa |
 |---|---|
-| 200 / 201 | Listo / creado |
-| 400 | Pediste mal |
-| 404 | No existe |
-| 500 | Se quemó la cocina |
+| **Servidor** | Un programa que atiende pedidos y guarda cosas |
+| **API** | La lista de pedidos que el servidor sabe atender |
+| **Ruta** | Un pedido concreto, como `/api/participantes` |
+| **JSON** | La forma de escribir datos: `{"nombre": "Ana"}` |
+| **Número de respuesta** | 200/201 listo · 400 pediste mal · 404 no existe · 500 falló el servidor |
+| **Variable de entorno** | Una clave secreta que vive fuera del código (el `.env`) |
 
-Agrega `app.use(express.json())` y la ruta `app.post("/api/participantes", ...)` (están en `paso2-registrar/server.js`).
+## Publicar tu proyecto
 
-**Pruébalo en Thunder Client:**
-- `POST http://localhost:3000/api/participantes` con cuerpo JSON `{"nombre":"Ana","disfraz":"Bruja"}`: debe responder **201**.
-- Lo mismo sin `disfraz`: debe responder **400**.
-- `GET http://localhost:3000/api/participantes/inventado`: debe responder **404**.
-
-En la página, registra tu disfraz: aparece una tarjeta nueva.
-
-## Paso 3: seguridad (el portero)
-
-**Primero atacamos.** Registra un participante con nombre vacío, con 5000 letras y con `<script>alert(1)</script>`. Mira qué pasa.
-
-**Luego protegemos** (todo en `paso3-seguridad/server.js`):
-
-| Defensa | Qué hace |
-|---|---|
-| `validar(...)` | Solo acepta nombre y disfraz de 2 a 30 letras |
-| `express.json({ limit: "10kb" })` | Rechaza mensajes enormes (error 413) |
-| `helmet` | Cabeceras de seguridad (no deja cargar scripts ajenos) |
-| `cors` | Decide qué otras páginas pueden usar tu API (por defecto, ninguna) |
-| `express-rate-limit` | Frena a quien manda demasiadas peticiones (error 429) |
-| `.env` + `ADMIN_TOKEN` | Una clave secreta que no se sube a GitHub |
-
-```bash
-npm install helmet cors express-rate-limit dotenv
-```
-
-Crea un archivo `.env` (copia `.env.example`) con `ADMIN_TOKEN=una-clave-larga-que-inventes`.
-
-**Pruébalo:**
-- `GET /api/admin/resumen` sin clave: **401**. Con la cabecera `x-admin-token: tu-clave`: **200**.
-- Manda 25 peticiones seguidas: aparece **429**.
-
-> Regla de oro: **nunca confíes en lo que manda el cliente.**
-
-## Paso 4: base de datos real
-
-Hasta ahora los datos vivían en la memoria: al reiniciar el servidor, se perdían.
-Ahora tu servidor guarda en **Supabase** (la base de datos del profesor).
-
-Agrega a tu `.env` las dos claves que te da el profesor:
-
-```
-SUPABASE_URL=...
-SUPABASE_KEY=...
-```
-
-Reemplaza la lista en memoria por las funciones `listar()`, `obtener()` y `crear()` de `paso4-base-de-datos/server.js`.
-
-**Pruébalo:** registra tu disfraz. Aparece en tu página y también en el muro del profesor.
-
-> `SUPABASE_KEY` es una clave "publishable": está hecha para ser pública, y es segura porque la base tiene reglas (RLS). **Nunca** uses una clave `secret` o `service_role` en el navegador.
-
-## Paso 5: archivos (la foto)
-
-```bash
-npm install multer
-```
-
-**Idea:** un archivo viaja distinto a un texto (`multipart/form-data`). Antes de guardarlo lo revisamos:
-
-| Revisión | Por qué |
-|---|---|
-| Máximo 2 MB | Evita que llenen el servidor |
-| Solo jpg, png o webp | Evita archivos peligrosos |
-| Mirar los primeros bytes | Un `.exe` renombrado a `.jpg` se descubre |
-| Ponerle un nombre nuevo | Nunca confiamos en el nombre que mandan |
-
-Agrega la ruta `POST /api/fotos` de `paso5-archivos/server.js`.
-
-**Pruébalo:**
-- Sube una selfie desde la página: aparece en tu tarjeta.
-- Sube un PDF: debe rechazarlo.
-- Sube una foto de más de 2 MB desde Thunder Client: **413**.
-
-## Paso 6: votar y publicar
-
-Agrega las rutas de votos (`paso6-final/server.js`). La regla de **un solo voto por dispositivo** la hace la base de datos.
-
-### Publicar en Vercel
-
-1. Sube tu carpeta a un repositorio nuevo de GitHub. **Comprueba que `.env` no se sube** (está en `.gitignore`).
-2. Entra a vercel.com con GitHub y elige **Add New > Project**. Importa tu repositorio.
-3. Si tu repositorio tiene varias carpetas, Vercel muestra una lista de aplicaciones. Pulsa **"Import single project"** junto a la tuya (no uses la opción de varios servicios). Verifica que **Root Directory** sea tu carpeta y que el preset sea **Express**.
-4. Antes de pulsar **Deploy**, abre **Environment Variables** y agrega:
-   - `SUPABASE_URL`
-   - `SUPABASE_KEY`
-   - `ADMIN_TOKEN` (inventa una clave nueva)
-5. Pulsa **Deploy** y espera menos de un minuto. Si tienes verificación en dos pasos, Vercel te pedirá el código de tu app de autenticación.
-6. Vercel te da un link público (`algo.vercel.app`). Abre `tu-link/` y `tu-link/proyector.html`.
+Los pasos están en **[PROMPTS.md](PROMPTS.md)**, sección "Publicar en Vercel". Lo haremos juntos, al final.
 
 ## Lo que lograste hoy
 
-- Programaste una **API** con rutas GET y POST.
-- La **protegiste** (validación, límites, CORS, cabeceras y claves).
-- Le agregaste **manejo de archivos** con revisión.
-- La conectaste a una **base de datos** y la **publicaste en internet**.
+- Dirigiste a una IA para construir una **API** con rutas.
+- Le pediste que la **protegiera** de datos malos y abusos.
+- Le agregaste **fotos** con revisión de seguridad.
+- La conectaste a una **base de datos real** y la **publicaste**.
