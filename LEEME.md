@@ -16,8 +16,7 @@ Los alumnos empiezan en `paso0-inicio`. Las demás carpetas son **la solución d
 
 ## Documentos
 
-- **Alumnos:** [GUIA-ALUMNO.md](GUIA-ALUMNO.md) y [PROMPTS.md](PROMPTS.md) (los prompts listos para copiar).
-- **Profesor:** [GUION-PROFESOR.md](GUION-PROFESOR.md) (guion minuto a minuto de 3 h 40 min).
+- [GUIA-ALUMNO.md](GUIA-ALUMNO.md) y [PROMPTS.md](PROMPTS.md) (los prompts listos para copiar).
 
 ## Probar en tu computadora
 
