@@ -2,7 +2,10 @@
 
 **Backend, APIs, seguridad y manejo de archivos con IA** · Sábado 31 de octubre · 3:00 a 7:00 p. m.
 
-Son **3 h 40 min de trabajo** más **2 descansos de 10 min**. Tu presentación es `Clase-API-Seguridad-Archivos-con-IA.pptx` (27 diapositivas, con notas del orador).
+Son **3 h 40 min de trabajo** más **2 descansos de 10 min**. Tienes **dos versiones** de la presentación (27 diapositivas cada una):
+
+- `Clase-API-con-IA_PROFESOR.pptx`: **con notas del orador**. Es la que usas tú, en vista del presentador.
+- `Clase-API-con-IA_ALUMNOS.pptx`: **sin notas**. Es la que compartes con los alumnos (por ejemplo, en PDF).
 
 ## Cómo funciona la clase
 
