@@ -10,8 +10,9 @@ No hace falta que sepas todo. Ejecuta el código, léelo con la analogía y, si 
 
 - [ ] Abre la carpeta `paso6-final`, copia `.env.example` a `.env`, ejecuta `npm install` y `npm run dev`. Debe abrir en http://localhost:3000.
 - [ ] Prueba los 6 pasos en tu laptop al menos una vez.
-- [ ] **Publica `paso6-final` en Vercel con tu cuenta y confirma que abre.** Es lo único que yo no pude comprobar. Revisa que `/` y `/proyector.html` carguen, y que subir foto funcione.
-- [ ] Verifica que Vercel no te pida tarjeta al crear la cuenta gratuita.
+- [ ] El deploy de `paso6-final` ya está probado en Vercel (plan Hobby, gratis): https://clase-api-five.vercel.app. Verificado: `/`, `/proyector.html`, la API, la subida de foto y el voto único. No pidió tarjeta.
+- [ ] Vercel pide el código de verificación en dos pasos si lo tienes activado. Ten tu app de autenticación a mano.
+- [ ] Los alumnos que aún no tengan cuenta de Vercel deben crearla antes de la clase (con "Continue with GitHub").
 - [ ] Sube las 6 carpetas a un repositorio público de GitHub, para que los alumnos las descarguen.
 - [ ] Ten listas las claves `SUPABASE_URL` y `SUPABASE_KEY` (la **publishable**) en una diapositiva. **Nunca** muestres una clave `secret` ni `service_role`.
 - [ ] Pide a los alumnos que instalen Node, VS Code y creen cuentas de GitHub y Vercel **antes** de la clase.
@@ -80,7 +81,7 @@ Si vas corto de tiempo, muestra tú el Paso 6 y que lo copien de la carpeta.
 - **Comprueban:** votan una vez; el segundo intento responde 409.
 
 ### Publicar en Vercel (25 min)
-- Hazlo en vivo con tu cuenta y que repitan. Pasos en `GUIA-ALUMNO.md`.
+- Hazlo en vivo con tu cuenta y que repitan. Pasos en `GUIA-ALUMNO.md`. Recuerda el botón **"Import single project"**.
 - **Importante:** las variables `SUPABASE_URL`, `SUPABASE_KEY` y `ADMIN_TOKEN` se cargan en Vercel antes de pulsar Deploy.
 - Pídeles que prueben su link desde el celular.
 
@@ -97,4 +98,4 @@ Si vas corto de tiempo, muestra tú el Paso 6 y que lo copien de la carpeta.
 - **El límite de peticiones en Vercel** cuenta por instancia del servidor, así que no es un límite global. Para algo serio se usa un almacén compartido (como Redis).
 - **El voto por dispositivo** se burla borrando los datos del navegador. Para algo serio hace falta login.
 - **Todos los alumnos escriben en tu mismo Supabase.** Limpia cuando quieras desde el SQL Editor: `delete from participantes;`.
-- **No pasó por Vercel todavía:** la guía de publicación no está probada de punta a punta.
+- **Importar en Vercel:** el repositorio tiene 6 carpetas y Vercel las detecta como 6 aplicaciones. Cada alumno debe pulsar **"Import single project"** junto a la carpeta que publica.

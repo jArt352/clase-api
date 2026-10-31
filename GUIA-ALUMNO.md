@@ -145,14 +145,13 @@ Agrega las rutas de votos (`paso6-final/server.js`). La regla de **un solo voto 
 
 1. Sube tu carpeta a un repositorio nuevo de GitHub. **Comprueba que `.env` no se sube** (está en `.gitignore`).
 2. Entra a vercel.com con GitHub y elige **Add New > Project**. Importa tu repositorio.
-3. Antes de pulsar **Deploy**, abre **Environment Variables** y agrega:
+3. Si tu repositorio tiene varias carpetas, Vercel muestra una lista de aplicaciones. Pulsa **"Import single project"** junto a la tuya (no uses la opción de varios servicios). Verifica que **Root Directory** sea tu carpeta y que el preset sea **Express**.
+4. Antes de pulsar **Deploy**, abre **Environment Variables** y agrega:
    - `SUPABASE_URL`
    - `SUPABASE_KEY`
    - `ADMIN_TOKEN` (inventa una clave nueva)
-4. Pulsa **Deploy** y espera. Vercel te da un link público.
-5. Abre `tu-link/` y `tu-link/proyector.html`.
-
-> Si la página principal no abre, entra por `tu-link/index.html` y avisa al profesor.
+5. Pulsa **Deploy** y espera menos de un minuto. Si tienes verificación en dos pasos, Vercel te pedirá el código de tu app de autenticación.
+6. Vercel te da un link público (`algo.vercel.app`). Abre `tu-link/` y `tu-link/proyector.html`.
 
 ## Lo que lograste hoy
 
